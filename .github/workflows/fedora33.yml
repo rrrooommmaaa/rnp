@@ -1,4 +1,4 @@
-name: centos7
+name: fedora33
 
 on:
   pull_request:
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     container:
-      image: centos:7
+      image: fedora:33
     timeout-minutes: 70
     strategy:
       matrix:
@@ -43,15 +43,14 @@ jobs:
     continue-on-error: true
     steps:
       - run: |
-          yum -y install http://opensource.wandisco.com/centos/7/git/x86_64/wandisco-git-release-7-2.noarch.rpm
-          yum -y install git
+          dnf -y install git
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
       - name: Add rnpuser
         run: |
           useradd rnpuser
-          yum -y -q install sudo
+          dnf -y -q install sudo
           echo -e "rnpuser\tALL=(ALL)\tNOPASSWD:\tALL" > /etc/sudoers.d/rnpuser
           echo -e "rnpuser\tsoft\tnproc\tunlimited\n" > /etc/security/limits.d/30-rnpuser.conf
       - name: Setup environment
@@ -84,7 +83,7 @@ jobs:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     container:
-      image: centos:7
+      image: fedora:33
     timeout-minutes: 10
     strategy:
       matrix:
@@ -95,13 +94,13 @@ jobs:
     continue-on-error: true
     steps:
       - run: |
-          yum -y install http://opensource.wandisco.com/centos/7/git/x86_64/wandisco-git-release-7-2.noarch.rpm
-          yum -y install git
+          dnf -y install git
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
       - name: Test
         run: |
+          # cmake
           set -euxo pipefail
           export USE_STATIC_DEPENDENCIES=no
           ci/before_install.sh
