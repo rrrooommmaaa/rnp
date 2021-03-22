@@ -35,7 +35,7 @@ CMAKE=cmake
 if [[ "$(get_os)" = "linux" ]]; then
   if [[ ${CPU} = "i386" ]]; then
     build_and_install_cmake
-    build_and_install_python
+    # build_and_install_python
   else
     pushd /
     ${SUDO} curl -L -o cmake.sh https://github.com/Kitware/CMake/releases/download/v3.14.5/cmake-3.14.5-Linux-x86_64.sh
