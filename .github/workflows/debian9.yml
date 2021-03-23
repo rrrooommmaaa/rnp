@@ -57,7 +57,6 @@ jobs:
         # it's only needed for rnpkeys_generatekey_verifykeyHomeDirNoPermission test
         run: |
            useradd rnpuser
-           usermod -aG sudo rnpuser
            echo -e "rnpuser\tALL=(ALL)\tNOPASSWD:\tALL" > /etc/sudoers.d/rnpuser
            echo -e "rnpuser\tsoft\tnproc\tunlimited\n" > /etc/security/limits.d/30-rnpuser.conf
            echo "SUDO=sudo" >> $GITHUB_ENV
